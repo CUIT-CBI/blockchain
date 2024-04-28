@@ -1,8 +1,6 @@
 package kvstore
 
 import (
-	"merkletree/hash"
-
 	"github.com/syndtr/goleveldb/leveldb"
 )
 
@@ -32,10 +30,8 @@ func (db *LevelDB) Has(key []byte) (bool, error) {
 	return db.db.Has(key, nil)
 }
 
-func (db *LevelDB) Put(value []byte) ([]byte, error) {
-	h := hash.Sha3Sum256(value)
-	err := db.db.Put(h, value, nil)
-	return h, err
+func (db *LevelDB) Put(key, value []byte) error {
+	return db.db.Put(key, value, nil)
 }
 
 func (db *LevelDB) Get(key []byte) ([]byte, error) {
